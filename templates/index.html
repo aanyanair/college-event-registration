@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>College Event Registration</title>
+
+<style>
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+background: linear-gradient(135deg, #6a11cb, #2575fc);
+color: #fff;
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+}
+
+header {
+text-align: center;
+padding: 20px;
+}
+
+main {
+flex: 1;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+form {
+background: #fff;
+color: #333;
+padding: 20px;
+border-radius: 10px;
+width: 90%;
+max-width: 400px;
+box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+form label {
+display: block;
+margin-top: 10px;
+font-weight: bold;
+}
+
+form input, form select {
+width: 100%;
+padding: 10px;
+margin-top: 5px;
+border-radius: 5px;
+border: 1px solid #ccc;
+}
+
+form button {
+margin-top: 15px;
+width: 100%;
+padding: 12px;
+background: #2575fc;
+color: #fff;
+border: none;
+border-radius: 5px;
+font-size: 16px;
+cursor: pointer;
+}
+
+form button:hover {
+background: #6a11cb;
+}
+
+#successMessage {
+margin-top: 15px;
+text-align: center;
+font-weight: bold;
+color: green;
+}
+
+footer {
+text-align: center;
+padding: 10px;
+background: rgba(0,0,0,0.2);
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>🎉 College Event Registration</h1>
+<p>Register now for Tech Fest, Cultural Events, and Workshops!</p>
+</header>
+
+<main>
+
+<form id="registerForm">
+
+<label>Full Name</label>
+<input type="text" name="name" required>
+
+<label>Email</label>
+<input type="email" name="email" required>
+
+<label>Department</label>
+<input type="text" name="department" required>
+
+<label>KU ID</label>
+<input type="text" name="ku_id" required>
+
+<label>Event Name</label>
+<select name="event" required>
+
+<option value="">-- Select Event --</option>
+
+<option value="Tech Fest">Tech Fest</option>
+
+<option value="Cultural Event">Cultural Event</option>
+
+<option value="Workshop">Workshop</option>
+
+</select>
+
+<button type="submit">
+Register
+</button>
+
+</form>
+
+<div id="successMessage"></div>
+
+</main>
+
+<footer>
+<p>Powered by Python Flask & MySQL</p>
+</footer>
+
+<script>
+document.getElementById("registerForm")
+.addEventListener("submit", function(e) {
+
+e.preventDefault();
+
+let formData = new FormData(this);
+
+fetch("/register", {
+method: "POST",
+body: formData
+})
+
+.then(response => response.json())
+
+.then(data => {
+
+if (data.status === "success") {
+
+document.getElementById("successMessage")
+.innerText = "✅ Registration successful!";
+
+document.getElementById("registerForm").reset();
+
+}
+
+else {
+
+document.getElementById("successMessage")
+.innerText = "❌ Error occurred.";
+
+}
+
+})
+
+.catch(error => {
+console.error(error);
+});
+
+});
+</script>
+
+</body>
+</html>
